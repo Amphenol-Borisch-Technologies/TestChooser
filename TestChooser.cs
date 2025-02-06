@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Diagnostics.Eventing.Reader;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -9,7 +10,7 @@ namespace TestChooser {
             InitializeComponent();
 
             if (args.Length == 0) {
-Choose:         using (OpenFileDialog openFileDialog = new OpenFileDialog()) {
+Choose: using (OpenFileDialog openFileDialog = new OpenFileDialog()) {
                     openFileDialog.InitialDirectory = @"C:\Program Files\ABT\Test\TestPlans\";
                     openFileDialog.Filter = "TestPlan Programs|*.exe";
 
@@ -35,11 +36,10 @@ Choose:         using (OpenFileDialog openFileDialog = new OpenFileDialog()) {
                         "No TestPlan selected.", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2)) Application.Exit();
                 }
                 goto Choose;
+            } else {
+                // TODO:  Receive in process.ID from TestExec.
             }
         }
-
-
-
     }
 }
 
