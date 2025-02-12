@@ -23,13 +23,31 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
-            this.components = new System.ComponentModel.Container();
+            this.progressBarWorking = new System.Windows.Forms.ProgressBar();
+            this.SuspendLayout();
+            // 
+            // progressBarWorking
+            // 
+            this.progressBarWorking.Location = new System.Drawing.Point(22, 52);
+            this.progressBarWorking.Name = "progressBarWorking";
+            this.progressBarWorking.Size = new System.Drawing.Size(541, 42);
+            this.progressBarWorking.TabIndex = 0;
+            // 
+            // TestChooser
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "Form1";
+            this.ClientSize = new System.Drawing.Size(592, 165);
+            this.Controls.Add(this.progressBarWorking);
+            this.Name = "TestChooser";
+            this.Text = "Working...";
+            this.ResumeLayout(false);
+
         }
 
         #endregion
+
+        private System.Windows.Forms.ProgressBar progressBarWorking;
     }
 }
 

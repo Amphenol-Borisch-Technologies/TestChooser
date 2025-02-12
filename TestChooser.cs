@@ -18,10 +18,11 @@ Choose:         if (openFileDialog.ShowDialog() != DialogResult.OK) {
                     else goto Choose;
                 } else {
                     Process testPlanNew = Process.Start($"\"{openFileDialog.FileName}\"");
-                    Int32 iterations = 0;
+                    Int32 iterations = 0, iterationsMax = 60;
                     Cursor.Current = Cursors.WaitCursor;
-                    while (testPlanNew.MainWindowHandle == IntPtr.Zero && iterations <= 60) {
-                        // TODO: Soon; display visual progress bar.
+                    progressBarWorking.Minimum = 0; this.progressBarWorking.Maximum = iterationsMax;
+                    while (testPlanNew.MainWindowHandle == IntPtr.Zero && iterations <= iterationsMax) {
+                        progressBarWorking.Value = iterations;
                         Thread.Sleep(500);
                         testPlanNew.Refresh();
                         iterations++; // 60 iterations with 0.5 second sleeps = 30 seconds max.
@@ -41,8 +42,8 @@ Choose:         if (openFileDialog.ShowDialog() != DialogResult.OK) {
                             testPlanOld = Process.GetProcessById(testPlanOldPID);
                             iterations = 0;
                             Cursor.Current = Cursors.WaitCursor;
-                            while (!testPlanOld.HasExited && iterations <= 60) {
-                                // TODO: Soon; display visual progress bar.
+                            while (!testPlanOld.HasExited && iterations <= iterationsMax) {
+                                progressBarWorking.Value = iterations;
                                 Thread.Sleep(500);
                                 testPlanOld.Refresh();
                                 iterations++; // 60 iterations with 0.5 second sleeps = 30 seconds max.
