@@ -11,6 +11,7 @@ namespace TestChooser {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new TestChooser(args));
+            Application.Exit();
         }
     }
 }
