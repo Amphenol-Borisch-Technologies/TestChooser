@@ -8,37 +8,47 @@ namespace TestChooser {
         public TestChooser(String[] args) {
             InitializeComponent();
 
-            if (args.Length == 0) {
-Choose: using (OpenFileDialog openFileDialog = new OpenFileDialog()) {
-                    openFileDialog.InitialDirectory = @"C:\Program Files\ABT\Test\TestPlans\";
-                    openFileDialog.Filter = "TestPlan Programs|*.exe";
+            using (OpenFileDialog openFileDialog = new OpenFileDialog()) {
+                openFileDialog.InitialDirectory = @"C:\Program Files\ABT\Test\TestPlans\";
+                openFileDialog.Filter = "TestPlan Programs|*.exe";
 
-                    if (openFileDialog.ShowDialog() == DialogResult.OK) {
-                        Process process = Process.Start($"\"{openFileDialog.FileName}\"");
-
-                        Int32 iterations = 0;
-                        Cursor.Current = Cursors.WaitCursor;
-                        while (process.MainWindowHandle == IntPtr.Zero && iterations <= 60) {
-                            Console.WriteLine("Waiting for main window to open...");
-                            Thread.Sleep(500);
-                            iterations++; // 60 iterations with 0.5 second sleeps = 30 seconds max.
-                            process.Refresh();
-                        }
-                        Cursor.Current = Cursors.Default;
-                        if (process.MainWindowHandle == IntPtr.Zero) {
-                            _ = MessageBox.Show(ActiveForm, $"Non-existent Window handle for '{openFileDialog.FileName}'.{Environment.NewLine}{Environment.NewLine}" +
-                                "Please contact Test Engineering.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
-                        Application.Exit();
+Choose:         if (openFileDialog.ShowDialog() != DialogResult.OK) {
+                    DialogResult dialogResult = MessageBox.Show(ActiveForm, $"Do you want to exit?{Environment.NewLine}{Environment.NewLine}", "Exit?", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
+                    if (dialogResult == DialogResult.Yes) Application.Exit();
+                    else goto Choose;
+                } else {
+                    Process testPlanNew = Process.Start($"\"{openFileDialog.FileName}\"");
+                    Int32 iterations = 0;
+                    Cursor.Current = Cursors.WaitCursor;
+                    while (testPlanNew.MainWindowHandle == IntPtr.Zero && iterations <= 60) {
+                        // TODO: Soon; display visual progress bar.
+                        Thread.Sleep(500);
+                        iterations++; // 60 iterations with 0.5 second sleeps = 30 seconds max.
+                        testPlanNew.Refresh();
                     }
-                    if (DialogResult.Yes == MessageBox.Show(ActiveForm, $"Do you want to exit?{Environment.NewLine}{Environment.NewLine}",
-                        "No TestPlan selected.", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2)) Application.Exit();
+
+                    Process testPlanOld = null;
+                    Int32 testPlanOldPID = 0;
+                    if (args.Length > 0) try { testPlanOldPID = Convert.ToInt32(args[0]); } catch { }
+                    if (testPlanNew.MainWindowHandle != IntPtr.Zero && testPlanOldPID != 0) {
+                        try {
+                            testPlanOld = Process.GetProcessById(testPlanOldPID);
+                            iterations = 0;
+                            while (!testPlanOld.HasExited && iterations <= 60) {
+                                // TODO: Soon; display visual progress bar.
+                                Thread.Sleep(500);
+                                iterations++;
+                                testPlanOld.Refresh();
+                            }
+                        } catch { }
+                    }
+
+                    Cursor.Current = Cursors.Default;
+                    if (testPlanOld != null && !testPlanOld.HasExited) _ = MessageBox.Show(ActiveForm, $"Old TestPlan hasn't exited.{Environment.NewLine}{Environment.NewLine}" +
+                        "Please contact Test Engineering.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Application.Exit();
                 }
-                goto Choose;
-            } else {
-                // TODO:  Receive in process.ID from TestExec.
             }
         }
     }
 }
-
