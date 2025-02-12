@@ -12,7 +12,7 @@ namespace TestChooser {
                 openFileDialog.InitialDirectory = @"C:\Program Files\ABT\Test\TestPlans\";
                 openFileDialog.Filter = "TestPlan Programs|*.exe";
 
-Choose: if (openFileDialog.ShowDialog() != DialogResult.OK) {
+Choose:         if (openFileDialog.ShowDialog() != DialogResult.OK) {
                     DialogResult dialogResult = MessageBox.Show(ActiveForm, $"Do you want to exit?{Environment.NewLine}{Environment.NewLine}", "Exit?", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
                     if (dialogResult == DialogResult.Yes) Application.Exit();
                     else goto Choose;
