@@ -30,27 +30,12 @@ namespace TestChooser {
                 Close();
             }
 
-            Boolean shouldExit = false;
-            while (!shouldExit) {
-                using (OpenFileDialog openFileDialog = new OpenFileDialog()) {
-                    openFileDialog.InitialDirectory = @"C:\Program Files\ABT\Test\TestPlans\";
-                    openFileDialog.Filter = "TestPlan Programs|*.exe";
-                    if (openFileDialog.ShowDialog() == DialogResult.OK) {
-                        _ = Process.Start($"\"{openFileDialog.FileName}\"");
-                        shouldExit = true;
-                        Close();
-                    }
-                }
-
-                if (shouldExit) Close();
-                else {
-                    DialogResult dialogResult = MessageBox.Show($"Do you want to exit?{Environment.NewLine}{Environment.NewLine}", "Exit?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                    if (dialogResult == DialogResult.Yes) {
-                        shouldExit = true;
-                        Close();
-                    }
-                }
+            using (OpenFileDialog openFileDialog = new OpenFileDialog()) {
+                openFileDialog.InitialDirectory = @"C:\Program Files\ABT\Test\TestPlans\";
+                openFileDialog.Filter = "TestPlan Programs|*.exe";
+                if (openFileDialog.ShowDialog() == DialogResult.OK) _ = Process.Start($"\"{openFileDialog.FileName}\"");
             }
+            Close();
         }
     }
 }
