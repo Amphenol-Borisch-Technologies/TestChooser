@@ -28,19 +28,27 @@ namespace TestChooser {
                 if (testPlanOld != null && !testPlanOld.HasExited) _ = MessageBox.Show($"Old TestPlan hasn't exited.{Environment.NewLine}{Environment.NewLine}" +
                     "Please contact Test Engineering.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Close();
+                Dispose();
+                Application.Exit();
             }
 
-Choose:     using (OpenFileDialog openFileDialog = new OpenFileDialog()) {
+Choose: using (OpenFileDialog openFileDialog = new OpenFileDialog()) {
                 openFileDialog.InitialDirectory = @"C:\Program Files\ABT\Test\TestPlans\";
                 openFileDialog.Filter = "TestPlan Programs|*.exe";
                 if (openFileDialog.ShowDialog() == DialogResult.OK) {
                     _ = Process.Start($"\"{openFileDialog.FileName}\"");
                     Close();
+                    Dispose();
+                    Application.Exit();
                 }
+                openFileDialog.Dispose();
             }
             DialogResult dialogResult = MessageBox.Show($"Do you want to exit?{Environment.NewLine}{Environment.NewLine}", "Exit?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (dialogResult == DialogResult.Yes) Close();
-            else goto Choose;
+            if (dialogResult == DialogResult.Yes) {
+                Close();
+                Dispose();
+                Application.Exit();
+            } else goto Choose;
         }
     }
 }
