@@ -40,10 +40,10 @@ namespace TestChooser {
                         shouldExit = true;
                         Close();
                     }
-                    openFileDialog.Dispose();
                 }
 
-                if (!shouldExit) {
+                if (shouldExit) Close();
+                else {
                     DialogResult dialogResult = MessageBox.Show($"Do you want to exit?{Environment.NewLine}{Environment.NewLine}", "Exit?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                     if (dialogResult == DialogResult.Yes) {
                         shouldExit = true;
