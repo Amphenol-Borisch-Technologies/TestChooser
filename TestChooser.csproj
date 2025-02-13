@@ -69,7 +69,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="TestChooser.cs" />
+    <Compile Include="TestChooser.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="TestChooser.Designer.cs">
       <DependentUpon>TestChooser.cs</DependentUpon>
     </Compile>

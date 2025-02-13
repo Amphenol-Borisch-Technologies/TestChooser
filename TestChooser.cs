@@ -4,18 +4,6 @@ using System.Threading;
 using System.Windows.Forms;
 
 namespace TestChooser {
-    public static class Program {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
-        [STAThread]
-        public static void Main(String[] args) {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new TestChooser(args));
-        }
-    }
-
     public partial class TestChooser : Form {
         public TestChooser(String[] args) {
             InitializeComponent();
@@ -48,6 +36,18 @@ namespace TestChooser {
                 if (openFileDialog.ShowDialog() == DialogResult.OK) _ = Process.Start($"\"{openFileDialog.FileName}\"");
             }
             Close();
+        }
+    }
+
+    public static class Program {
+        /// <summary>
+        /// The main entry point for the application.
+        /// </summary>
+        [STAThread]
+        public static void Main(String[] args) {
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new TestChooser(args));
         }
     }
 }
