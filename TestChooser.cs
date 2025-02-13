@@ -8,10 +8,10 @@ namespace TestChooser {
         public TestChooser(String[] args) {
             InitializeComponent();
             Hide();
-            Process testPlanOld = null;
             Int32 testPlanOldPID = 0;
             if (args.Length > 0) try { testPlanOldPID = Convert.ToInt32(args[0]); } catch { }
             if (testPlanOldPID != 0) {
+                Process testPlanOld = null;
                 try {
                     testPlanOld = Process.GetProcessById(testPlanOldPID);
                     Int32 iterations = 0, iterationsMax = 60;
@@ -33,7 +33,6 @@ namespace TestChooser {
 Choose:     using (OpenFileDialog openFileDialog = new OpenFileDialog()) {
                 openFileDialog.InitialDirectory = @"C:\Program Files\ABT\Test\TestPlans\";
                 openFileDialog.Filter = "TestPlan Programs|*.exe";
-
                 if (openFileDialog.ShowDialog() == DialogResult.OK) {
                     _ = Process.Start($"\"{openFileDialog.FileName}\"");
                     Close();
