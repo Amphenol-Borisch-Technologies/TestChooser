@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
+using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
+using System.Xml.Linq;
 
 namespace TestChooser {
     public static class Program {
@@ -42,9 +45,10 @@ namespace TestChooser {
                 Close();
             }
 
+            String ChooserDefinitionXML = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + @"\ChooserDefinition.xml";
             using (OpenFileDialog openFileDialog = new OpenFileDialog()) {
-                openFileDialog.InitialDirectory = @"C:\Program Files\ABT\Test\TestPlans\";
-                openFileDialog.Filter = "TestPlan Programs|*.exe";
+                openFileDialog.InitialDirectory = XElement.Load(ChooserDefinitionXML).Element("OpenFileDialog").Attribute("InitialDirectory").Value;
+                openFileDialog.Filter = XElement.Load(ChooserDefinitionXML).Element("OpenFileDialog").Attribute("Filter").Value;
                 if (openFileDialog.ShowDialog() == DialogResult.OK) _ = Process.Start($"\"{openFileDialog.FileName}\"");
             }
             Close();
