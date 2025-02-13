@@ -10,7 +10,6 @@ namespace TestChooser {
     public partial class TestChooser : Form {
         public TestChooser(String[] args) {
             InitializeComponent();
-            Hide();
             Int32 testPlanOldPID = 0;
             if (args.Length > 0) try { testPlanOldPID = Convert.ToInt32(args[0]); } catch { }
             if (testPlanOldPID != 0) {
@@ -45,6 +44,8 @@ namespace TestChooser {
             }
             Close();
         }
+
+        private void Form_Load(Object sender, EventArgs e) { Hide(); }
     }
 
     public static class Program {

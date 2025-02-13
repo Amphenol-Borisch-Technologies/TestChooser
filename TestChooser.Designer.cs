@@ -41,6 +41,7 @@
             this.Controls.Add(this.progressBarWorking);
             this.Name = "TestChooser";
             this.Text = "Working...";
+            this.Load += new System.EventHandler(this.Form_Load);
             this.ResumeLayout(false);
 
         }
