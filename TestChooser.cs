@@ -42,8 +42,6 @@ namespace TestChooser {
                 openFileDialog.Filter = XElement.Load(ChooserDefinitionXML).Element("OpenFileDialog").Attribute("Filter").Value;
                 if (openFileDialog.ShowDialog() == DialogResult.OK) _ = Process.Start($"\"{openFileDialog.FileName}\"");
             }
-            DialogResult dialogResult = MessageBox.Show("Do you want to choose a TestPlan?", "Choose a TestPlan?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (dialogResult == DialogResult.Yes) Application.Restart();
         }
     }
 }
