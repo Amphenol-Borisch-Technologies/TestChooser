@@ -6,7 +6,6 @@ using System.Threading;
 using System.Windows.Forms;
 using System.Xml.Linq;
 
-
 namespace TestChooser {
     public static class TestChooser {
         [STAThread]
