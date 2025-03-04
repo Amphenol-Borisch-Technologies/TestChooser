@@ -48,7 +48,7 @@
   </xs:complexType>
 
 
-  <xs:element name="ChooserDefinition">
+  <xs:element name="TestChooserDefinition">
     <xs:complexType>
       <xs:sequence>
         <xs:element name="OpenFileDialog" type="OpenFileDialog" minOccurs="1" maxOccurs="1" >

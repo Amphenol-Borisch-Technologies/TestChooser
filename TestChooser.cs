@@ -35,10 +35,10 @@ namespace TestChooser {
                 }
             }
 
-            String ChooserDefinitionXML = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + @"\ChooserDefinition.xml";
+            String TestChooserDefinitionXML = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + @"\TestChooserDefinition.xml";
             using (OpenFileDialog openFileDialog = new OpenFileDialog()) {
-                openFileDialog.InitialDirectory = XElement.Load(ChooserDefinitionXML).Element("OpenFileDialog").Attribute("InitialDirectory").Value;
-                openFileDialog.Filter = XElement.Load(ChooserDefinitionXML).Element("OpenFileDialog").Attribute("Filter").Value;
+                openFileDialog.InitialDirectory = XElement.Load(TestChooserDefinitionXML).Element("OpenFileDialog").Attribute("InitialDirectory").Value;
+                openFileDialog.Filter = XElement.Load(TestChooserDefinitionXML).Element("OpenFileDialog").Attribute("Filter").Value;
                 if (openFileDialog.ShowDialog() == DialogResult.OK) _ = Process.Start($"\"{openFileDialog.FileName}\"");
             }
         }
